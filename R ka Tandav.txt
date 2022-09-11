@@ -52,10 +52,86 @@ print(file.finaldata)
 
 
 Data wrangling
+******using tidyr******
+
 library(tidyr)
 
-1.import of dataset
-to view dataset
+1.import of dataset:
+my_data <- read_csv(file.choose())
+
 >View(file.data)
 > m <- data.frame(file.data)
 > str(m)
+
+>Y = gather(marketing_campaign, "AcceptedCmp", "Value", 21:25)
+>View(Y)   
+
+>Y1 = spread(marketing_campaign, Marital_Status, Income)
+>View(Y1)
+
+-->splitting a	column	by	a	character	string	separator
+>Y2 = separate(marketing_campaign, Dt_Customer, c("year", "month", "day"), sep = "-")
+>View(Y2)
+
+--->Uniting multiple	columns	into	a	single	column
+Y3 = unite(Y2, "Dt_Customer", year, month, day, sep = "-")
+View(Y3)
+
+
+dplyr
+******using tidyr******
+
+library(dplyr)
+my_data <- read_csv(file.choose())
+
+>View(bodyPerformance)
+>bodyPerformance <- data.frame(bodyPerformance)
+>str(bodyPerformance)
+
+--->Extract existing variables.
+>Z1 = select(bodyPerformance, age, gender, height_cm, weight_kg, body.fat_.)
+# OR
+>Z1 = select(bodyPerformance, age:body.fat_.)
+# OR
+>Z1 = select(bodyPerformance, 1:5)   # Produces same output
+>View(Z1)
+
+--->Extract existing observations
+>Z5 = filter(bodyPerformance, weight_kg >= 70)
+>View(Z5)
+
+>Z6 = filter(bodyPerformance, weight_kg >= 70, gender %in% c("M"))
+>View(Z6)
+
+--->Identifying distinct observations in column
+>Z7 = distinct(bodyPerformance, age, class)
+>View(Z7)
+
+--->Separating some observations from the data
+>Z7 = slice(bodyPerformance, 5:15)
+>View(Z7)
+
+>Z1 = mutate(Z1, ratio = height_cm / weight_kg)
+>View(Z1)
+
+>Z1 = arrange(Z1, desc(age), height_cm)
+>View(Z1)
+
+
+--->Joining Data
+# Generate two new data sets with same number of observations
+
+A1 = select(bodyPerformance, age, height_cm, weight_kg)
+View(A1)
+
+A2 = select(bodyPerformance, gender, diastolic, systolic)
+View(A2)
+
+# Joining the data sets A1 and A2 Column wise
+A3 = bind_cols(A1, A2)
+View(A3)
+
+
+# Joining the data sets A1 and A2 row wise
+>A4 = bind_rows(A1, A2)
+>View(A4)

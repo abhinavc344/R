@@ -1,0 +1,61 @@
+How to import file:
+library("readr")	
+my_data <- read_csv(file.choose())		//use to import csv file
+View(my_data)					//display data
+problems(my_data)					//
+head(my_data) 					//display fisrt 6 entries
+
+Data frame:
+--->insertion
+	file.data <- data.frame(
+
+file_id = c (1:5),
+
+file_name = c("Rahul","Dharma","Manoj","Reema","Gauri"),
+
+salary = c(60,51,61,72,84),
+
+Join_date = as.Date(c("2012-01-01", "2013-09-23", "2014-11-15",
+
+"2014-05-11", "2015-03-27")),
+
+stringsAsFactors = FALSE )
+
+--->displaying data
+print(file.data)
+
+--->structure of data
+str(file.data)
+
+--->summary of data
+print(summary(file.data))
+
+--->Extracting a particular column
+Ext <- data.frame(file.data$file_name,file.data$salary)
+print(Ext)
+
+--->Extracting fisrt two rows
+result <- file.data[1:2,]
+print(result)
+
+--->Extract 3rd and 5th row with 2nd and 4th column.
+result <- file.data[c(3,5),c(2,4)]
+
+--->Add the "dept" column.
+file.data$dept <- c("IT","Operations","IT","HR","Finance")
+v <- file.data
+print(v)
+
+--->Bind the two data frames.
+file.finaldata <- rbind(file.data,file.newdata)
+print(file.finaldata)
+
+
+Data wrangling
+library(tidyr)
+
+1.import of dataset
+to view dataset
+>View(file.data)
+> m <- data.frame(file.data)
+> str(m)
